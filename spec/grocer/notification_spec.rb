@@ -61,5 +61,17 @@ describe Grocer::Notification do
         -> { notification.to_bytes }.should raise_error(Grocer::PayloadTooLargeError)
       end
     end
+
+    context 'object comparison' do
+      let(:payload_options) { { alert: 'hi', badge: 2, sound: 'siren.aiff' } }
+
+      it 'evaluates to true when two objects have the same byte representation' do
+        notification.should == Grocer::Notification.new(payload_options)
+      end
+
+      it 'evaluates to false when two objects have a different byte representation' do
+        notification.should_not == Grocer::Notification.new(payload_options.merge(alert: 'Hola Amigo!'))
+      end
+    end
   end
 end

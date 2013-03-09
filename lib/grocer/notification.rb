@@ -75,5 +75,11 @@ module Grocer
     def device_token_length
       32
     end
+
+    def ==(other)
+      self.to_bytes == other.to_bytes
+    rescue
+      false
+    end
   end
 end
