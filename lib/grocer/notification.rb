@@ -77,7 +77,7 @@ module Grocer
     end
 
     def ==(other)
-      self.to_bytes == other.to_bytes
+      other.respond_to?(:to_bytes) && self.to_bytes == other.to_bytes
     rescue
       false
     end
