@@ -63,6 +63,7 @@ describe Grocer::Notification do
     end
 
     context 'object comparison' do
+      class NotANotification < Grocer::Notification; end
       let(:payload_options) { { alert: 'hi', badge: 2, sound: 'siren.aiff' } }
 
       it 'evaluates to true when two objects have the same byte representation' do
@@ -71,6 +72,10 @@ describe Grocer::Notification do
 
       it 'evaluates to false when two objects have a different byte representation' do
         notification.should_not == Grocer::Notification.new(payload_options.merge(alert: 'Hola Amigo!'))
+      end
+
+      it 'evaluates to false when two objects are similar but of different types' do
+        notification.should_not == NotANotification.new(payload_options)
       end
     end
   end
